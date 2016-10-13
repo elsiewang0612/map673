@@ -129,7 +129,8 @@ $.getJSON("ky_counties_housing.json", function(data) {
                     fillOpacity: 1,
                     fillColor: '#1f78b4'
                 };
-        }          
+        } 
+        
     }).addTo(map);
     
     drawMap();
@@ -154,7 +155,11 @@ function drawMap() {
         layer.setStyle({
             fillColor: getColor(layer.feature.properties[attribute]/layer.feature.properties[norm], breaks)
         });
+    var popup = "<b>"+layer.feature.properties.NAME+" County"+"</b><br>"
+                     +"<b>OWNED_FREE</b>: "+layer.feature.properties[attribute]/layer.feature.properties[norm]+"</b><br>"                                           
+        layer.bindPopup(popup);
     });
+    
     drawLegend();
     function drawLegend() {
     var legend = L.control({position: 'topleft'});
@@ -186,11 +191,9 @@ function drawMap() {
     var breaks = clusters.map(function(cluster){
         return [cluster[0],cluster.pop()];
     });
-    return breaks;      
+    return breaks; 
 // code here to determine range and establish classification breaks
 }
-
-    
 
         
     </script>
