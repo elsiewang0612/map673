@@ -113,6 +113,7 @@ var map = L.map('map', options);
     // the data loaded from the file is accessible here within this function scope!
     console.log(data);
 });
+map.addControl( L.control.zoom({ position: 'topright' }));
 
 var dataLayer,
     attribute = "OWNED_MORT",
