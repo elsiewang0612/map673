@@ -156,7 +156,7 @@ function drawMap() {
             fillColor: getColor(layer.feature.properties[attribute]/layer.feature.properties[norm], breaks)
         });
     var popup = "<b>"+layer.feature.properties.NAME+" County"+"</b><br>"
-                     +"<b>OWNED_FREE</b>: "+layer.feature.properties[attribute]/layer.feature.properties[norm]+"</b><br>"                                           
+                     +"<b>OWNED_FREE</b>: "+((layer.feature.properties[attribute]/layer.feature.properties[norm])*100).toFixed(2)+"%"+"</b><br>"                                           
         layer.bindPopup(popup);
     });
     
