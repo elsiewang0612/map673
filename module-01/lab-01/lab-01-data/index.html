@@ -116,7 +116,7 @@ var map = L.map('map', options);
 map.addControl( L.control.zoom({ position: 'topright' }));
 
 var dataLayer,
-    attribute = "OWNED_MORT",
+    attribute = "OWNED_FREE",
     norm = "OWNER";
 
 $.getJSON("ky_counties_housing.json", function(data) {
@@ -186,17 +186,7 @@ function drawMap() {
     var breaks = clusters.map(function(cluster){
         return [cluster[0],cluster.pop()];
     });
-    return breaks;  
-    function drawLegend(breaks) {
-    var legend = L.control({position: 'topleft'});
-    legend.onAdd = function () {
-        var div = L.DomUtil.create('div', 'legend');
-        div.innerHTML = "This is going to be legend information!";
-        return div;
-    };
-    legend.addTo(map);
-}
-    
+    return breaks;      
 // code here to determine range and establish classification breaks
 }
 
