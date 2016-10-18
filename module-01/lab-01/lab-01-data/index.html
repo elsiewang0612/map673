@@ -3,202 +3,216 @@
 <script src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
 <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.1/simple_statistics.js"></script>
+
 <head>
-    <meta charset=utf-8 />
-    <title>Lab 01 Template</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+	<meta charset=utf-8 />
+	<title>Lab 01 Template</title>
+	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
-    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-    
-    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+	<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: whitesmoke;
-            font-family: Lato, sans-serif;
-            color: #0D0000;
-        }
-        header {
-            width: 80%;
-            margin: 10px auto 10px auto;
-        }
-        h1 {
-            display: inline-block;
-            margin-right: 20px;
-            color: #001323;
-        }
-        h2 {
-            display: inline-block;
-            color: #001323;
-        }
-        #map {
-            width: 80%;
-            height: 540px;
-            margin: 10px auto 10px auto;
-            background: whitesmoke;
-            border: 2px solid #dddedf;
-        }
-        .legend {
-    padding: 6px 8px;
-    font-size: 1em;
-    background: rgba(255,255,255,0.8);
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    border-radius: 5px;
-}
-.legend h3 {
-    font-size: 1.1em;
-    font-weight: normal;
-    color: #001323;
-    margin: 0 0 10px 0;
-}
-.legend span {
-    width: 20px;
-    height: 20px;
-    float: left;
-    margin: 0 10px 4px 0;
-}
-.legend label {
-    font-size: 1.1em;
-}
-.legend label:after {
-    content: '';
-    display: block;
-    clear: both;
-}
-        footer {
-            width: 80%;
-            margin: 10px auto 10px auto;
-        }
-        p {
-            font-size: 1em;
-            color: #001323;
-        }
-        
-        /* ADD YOUR ADDITIONAL STYLE RULES HERE */
-        
-    </style>
+	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			background: whitesmoke;
+			font-family: Lato, sans-serif;
+			color: #0D0000;
+		}
+		
+		header {
+			width: 80%;
+			margin: 10px auto 10px auto;
+		}
+		
+		h1 {
+			display: inline-block;
+			margin-right: 20px;
+			color: #001323;
+		}
+		
+		h2 {
+			display: inline-block;
+			color: #001323;
+		}
+		
+		#map {
+			width: 80%;
+			height: 540px;
+			margin: 10px auto 10px auto;
+			background: whitesmoke;
+			border: 2px solid #dddedf;
+		}
+		
+		.legend {
+			padding: 6px 8px;
+			font-size: 1em;
+			background: rgba(255, 255, 255, 0.8);
+			box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+			border-radius: 5px;
+		}
+		
+		.legend h3 {
+			font-size: 1.1em;
+			font-weight: normal;
+			color: #001323;
+			margin: 0 0 10px 0;
+		}
+		
+		.legend span {
+			width: 20px;
+			height: 20px;
+			float: left;
+			margin: 0 10px 4px 0;
+		}
+		
+		.legend label {
+			font-size: 1.1em;
+		}
+		
+		.legend label:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		
+		footer {
+			width: 80%;
+			margin: 10px auto 10px auto;
+		}
+		
+		p {
+			font-size: 1em;
+			color: #001323;
+		}
+		/* ADD YOUR ADDITIONAL STYLE RULES HERE */
+	</style>
 </head>
 
 <body>
-    <header>
-        <h1>Map Title</h1>
-        <h2>Map Subtitle</h2>
-    </header>
+	<header>
+		<h1>Map Title</h1>
+		<h2>Map Subtitle</h2>
+	</header>
 
-    <div id='map'></div>
+	<div id='map'></div>
 
-    <footer>
-        <p>Map authored by Xi Wang</p>
-        <p>The data was collected in the 2010 census</p>
-        <p>This map shows the geometry information and the distribution of owned-free housing units accross Kentucky in 2010. It provides the proportion of the number of owned-free housisng units and the total number of owned housing units for each county in Kentucky. Readers can observe the difference of the number of owned-free housing between counties in a straight way. A clear and correct cartographic symbology plays a important role in the data representation. readers capture the information fully depends on the visulization, so they would be easily confused by incorrect or unclear cartographic symbology. It decides the effectiveness of communication between readers and the information of a map. A map alsways trys to deliver objective data or knowledge. A lot of thoughts and applications can come out from one map. For example, people may use this map to analyze the prospect of housing market; people may investigate the situation of mortgage in Kentucky, etc. The map only deliver the objective information without any bias. 
-        </p>
-    </footer>
+	<footer>
+		<p>Map authored by Xi Wang</p>
+		<p>The data was collected in the 2010 census</p>
+		<p>This map shows the geometry information and the distribution of owned-free housing units accross Kentucky in 2010. It provides the proportion of the number of owned-free housisng units and the total number of owned housing units for each county in Kentucky. Readers can observe the difference of the number of owned-free housing between counties in a straight way. A clear and correct cartographic symbology plays a important role in the data representation. readers capture the information fully depends on the visulization, so they would be easily confused by incorrect or unclear cartographic symbology. It decides the effectiveness of communication between readers and the information of a map. A map alsways trys to deliver objective data or knowledge. A lot of thoughts and applications can come out from one map. For example, people may use this map to analyze the prospect of housing market; people may investigate the situation of mortgage in Kentucky, etc. The map only deliver the objective information without any bias.
+		</p>
+	</footer>
 
-    <script>
-        
-        // WRITE YOUR CODE JAVASCRIPT CODE HERE
-    
-    jQuery("h1").html("Housing Ownership in Kentucky");
-    jQuery("h2").html("Free and Clear Units");
-        
-        var options = {
-    center: [37.8, -85.8],
-    zoom: 7.4,
-    zoomControl: false
-}
-var map = L.map('map', options);
-        $.getJSON("ky_counties_housing.json", function(data) {
-    // the data loaded from the file is accessible here within this function scope!
-    console.log(data);
-});
-map.addControl( L.control.zoom({ position: 'topright' }));
+	<script>
 
-var dataLayer,
-    attribute = "OWNED_FREE",
-    norm = "OWNER";
+		jQuery("h1").html("Housing Ownership in Kentucky");
+		jQuery("h2").html("Free and Clear Units");
 
-$.getJSON("ky_counties_housing.json", function(data) {
+		var options = {
+			center: [37.8, -85.8],
+			zoom: 7.4,
+			zoomControl: false
+		}
+		var map = L.map('map', options);
 
-    dataLayer = L.geoJson(data, {
-            style: function(feature) {
-            return {
-                    color: '#dddddd',
-                    weight: 1,
-                    fillOpacity: 1,
-                    fillColor: '#1f78b4'
-                };
-        } 
-        
-    }).addTo(map);
-    
-    drawMap();
-    // add a call to a new function named drawMap here
-});
-        
-function drawMap() {    
-    var breaks = getClassBreaks();
-    function getColor(d, breaks) {
-      if(d <= breaks[0][1]) {
-            return '#f1eef6';
-        } else if(d <= breaks[1][1]) {
-            return '#bdc9e1';
-        } else if(d <= breaks[2][1]) {
-            return '#74a9cf';
-        } else if(d <= breaks[3][1]) {
-            return '#2b8cbe'
-        } else if(d <= breaks[4][1]) {
-            return '#045a8d'
-        }}
-    dataLayer.eachLayer(function(layer) {
-        layer.setStyle({
-            fillColor: getColor(layer.feature.properties[attribute]/layer.feature.properties[norm], breaks)
-        });
-    var popup = "<b>"+layer.feature.properties.NAME+" County"+"</b><br>"
-                     +"<b>OWNED_FREE</b>: "+((layer.feature.properties[attribute]/layer.feature.properties[norm])*100).toFixed(2)+"%"+"</b><br>"                                           
-        layer.bindPopup(popup);
-    });
-    
-    drawLegend();
-    function drawLegend() {
-    var legend = L.control({position: 'topleft'});
-    legend.onAdd = function () {
-        var div = L.DomUtil.create('div', 'legend');
-        div.innerHTML = "<h3>" + attribute + " per " + norm + "</h3>";
-        for (var i = 0; i < breaks.length; i++) {
+		map.addControl(L.control.zoom({
+			position: 'topright'
+		}));
 
-        var color = getColor(breaks[i][0], breaks);
+		var dataLayer,
+			attribute = "OWNED_FREE",
+			norm = "OWNER";
 
-        div.innerHTML +=
-            '<span style="background:' + color + '"></span> ' +
-            '<label>'+(breaks[i][0]*100).toLocaleString() + ' &mdash; ' + 
-            (breaks[i][1]*100).toLocaleString() + '</label>';
-}
-        return div;
-    };
-    legend.addTo(map);
-}
-    
-}
-    function getClassBreaks() {
-    var values = [];
-    dataLayer.eachLayer(function(layer) {
-    var value = layer.feature.properties[attribute]/layer.feature.properties[norm];
-    values.push(value);   
-    });
-    var clusters = ss.ckmeans(values, 5);
-    var breaks = clusters.map(function(cluster){
-        return [cluster[0],cluster.pop()];
-    });
-    return breaks; 
-// code here to determine range and establish classification breaks
-}
+		$.getJSON("ky_counties_housing.json", function (data) {
 
-        
-    </script>
-    
+			dataLayer = L.geoJson(data, {
+				style: function (feature) {
+					return {
+						color: '#dddddd',
+						weight: 1,
+						fillOpacity: 1,
+						fillColor: '#1f78b4'
+					};
+				}
+
+			}).addTo(map);
+	
+			drawMap();
+			
+		});
+
+		function drawMap() {
+			var breaks = getClassBreaks();
+
+			dataLayer.eachLayer(function (layer) {
+				layer.setStyle({
+					fillColor: getColor(layer.feature.properties[attribute] / layer.feature.properties[norm], breaks)
+				});
+				var popup = "<b>" + layer.feature.properties.NAME + " County" + "</b><br>" + "<b>OWNED_FREE</b>: " + ((layer.feature.properties[attribute] / layer.feature.properties[norm]) * 100).toFixed(2) + "%" + "</b><br>"
+				layer.bindPopup(popup);
+			});
+
+			drawLegend(breaks);
+
+		}
+		
+		function drawLegend(breaks) {
+			
+			var legend = L.control({
+				position: 'topleft'
+			});
+			
+			legend.onAdd = function () {
+				var div = L.DomUtil.create('div', 'legend');
+				div.innerHTML = "<h3>" + attribute + " per " + norm + "</h3>";
+				for (var i = 0; i < breaks.length; i++) {
+
+					var color = getColor(breaks[i][0], breaks);
+
+					div.innerHTML +=
+						'<span style="background:' + color + '"></span> ' +
+						'<label>' + (breaks[i][0] * 100).toLocaleString() + ' &mdash; ' +
+						(breaks[i][1] * 100).toLocaleString() + '</label>';
+				}
+				return div;
+			};
+			legend.addTo(map);
+		}
+		
+		function getColor(d, breaks) {
+			if (d <= breaks[0][1]) {
+				return '#f1eef6';
+			} else if (d <= breaks[1][1]) {
+				return '#bdc9e1';
+			} else if (d <= breaks[2][1]) {
+				return '#74a9cf';
+			} else if (d <= breaks[3][1]) {
+				return '#2b8cbe'
+			} else if (d <= breaks[4][1]) {
+				return '#045a8d'
+			}
+		}
+
+		function getClassBreaks() {
+			
+			var values = [];
+			dataLayer.eachLayer(function (layer) {
+				var value = layer.feature.properties[attribute] / layer.feature.properties[norm];
+				values.push(value);
+			});
+			var clusters = ss.ckmeans(values, 5);
+			var breaks = clusters.map(function (cluster) {
+				return [cluster[0], cluster.pop()];
+			});
+			return breaks;
+			
+		}
+	</script>
+
 </body>
 
 </html>
