@@ -2,106 +2,109 @@
 <html>
 
 <head>
-	<meta charset=utf-8 />
-	<title>Housing in Kentucky</title>
-	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <meta charset=utf-8 />
+    <title>Housing in Kentucky</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
-	<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 
-	<style>
-		body {
-			margin: 0;
-			padding: 0;
-			background: whitesmoke;
-			font-family: Lato, sans-serif;
-			color: #0D0000;
-		}
-		
-		header {
-			width: 80%;
-			margin: 10px auto 10px auto;
-		}
-		
-		h1 {
-			display: inline-block;
-			margin-right: 20px;
-			color: #001323;
-		}
-		
-		h2 {
-			display: inline-block;
-			color: #001323;
-		}
-		
-		#map {
-			width: 80%;
-			height: 540px;
-			margin: 10px 10%;
-			background: whitesmoke;
-			border: 2px solid #dddedf;
-		}
-		
-		footer {
-			padding: 6px 10%;
-			width: 80%;
-		}
-		
-		p {
-			font-size: 1em;
-			color: #001323;
-		}
-		
-		.legend {
-			padding: 6px 8px;
-			font-size: 1em;
-			background: rgba(255, 255, 255, 0.8);
-			box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-			border-radius: 5px;
-		}
-		
-		.legend h3 {
-			font-size: 1.1em;
-			font-weight: normal;
-			color: #001323;
-			margin: 0 0 10px 0;
-		}
-		
-		.legend span {
-			width: 20px;
-			height: 20px;
-			float: left;
-			margin: 0 10px 4px 0;
-		}
-		
-		.legend label {
-			font-size: 1.1em;
-		}
-		
-		.legend label:after {
-			content: '';
-			display: block;
-			clear: both;
-		}
-        #ui-controls {   
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        
+        header {
+            width: 80%;
+            margin: 10px auto 10px auto;
+        }
+        
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+        }
+        
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        
+        #map {
+            width: 80%;
+            height: 540px;
+            margin: 10px 10%;
+            background: whitesmoke;
+            border: 2px solid #dddedf;
+        }
+        
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+        
+        .legend {
+            padding: 6px 8px;
+            font-size: 1em;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        
+        .legend h3 {
+            font-size: 1.1em;
+            font-weight: normal;
+            color: #001323;
+            margin: 0 0 10px 0;
+        }
+        
+        .legend span {
+            width: 20px;
+            height: 20px;
+            float: left;
+            margin: 0 10px 4px 0;
+        }
+        
+        .legend label {
+            font-size: 1.1em;
+        }
+        
+        .legend label:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        
+        #ui-controls {
             margin-left: 10%;
         }
+        
         #ui-controls label {
             font-size: 1em;
             margin-right: 5px;
-        } 
+        }
+        
         .info h3 {
-            margin: 0;   
+            margin: 0;
         }
 
-	</style>
+    </style>
 </head>
 
 <body>
-	<header>
-		<h1>Housing Distribution in Kentucky</h1>
-		<h2>Vancant Housing Units</h2>
-	</header>
+    <header>
+        <h1>Housing Distribution in Kentucky</h1>
+        <h2>Vancant Housing Units</h2>
+    </header>
 
     <div id='ui-controls'>
         <label>Choose a data attribute:</label>
@@ -115,18 +118,18 @@
             <option value="VACANT_OTH">vacant units, other</option>
         </select>
     </div>
-	<div id='map'></div>
+    <div id='map'></div>
 
-	<footer>
-		<p>Map authored by Xi Wang</p>
-		<p>The data was collected in the 2010 census</p>
-	</footer>
-	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.1/simple_statistics.js"></script>
-	<script>
+    <footer>
+        <p>Map authored by Xi Wang</p>
+        <p>The data was collected in the 2010 census</p>
+    </footer>
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.1/simple_statistics.js"></script>
+    <script>
         //set initial options for the map
-		var options = {
+        var options = {
             center: [38.2, -85.8],
             zoom: 7.4,
             minZoom: 7.4,
@@ -134,197 +137,201 @@
             dragging: false,
             zoomControl: false
         }
-        
-       //create an object to associate the property names with more meaningful labels for the user 
+
+        //create an object to associate the property names with more meaningful labels for the user 
         var labels = {
             "VACANT": "vancant units",
             "VACANT_FOR": "% vacant units for rent",
             "VACANT_REN": "% vacant units, rented not occupied",
-            "VACANT_FO2": "% vacant units, for sale only", 
+            "VACANT_FO2": "% vacant units, for sale only",
             "VACANT_SOL": "% vacant units, sole not occupied",
             "VACANT_SEA": "% vacant units, for sale only",
             "VACANT_MIG": "% vacant units used for migratory workers",
             "VACANT_OTH": "% vacant units, other"
         }
-        
-        //create a new Leaflet map, passing map options, and assign to variable
-		var map = L.map('map', options);
 
-		var dataLayer, // declare global variable for map units
-			attribute = "VACANT_FOR", // assign initial variable to store data attribute 
-			norm = "VACANT"; // asign initial variable to store normalizing data attribute
-        
+        //create a new Leaflet map, passing map options, and assign to variable
+        var map = L.map('map', options);
+
+        var dataLayer, // declare global variable for map units
+            attribute = "VACANT_FOR", // assign initial variable to store data attribute 
+            norm = "VACANT"; // asign initial variable to store normalizing data attribute
+
         // QJuery AJAX request to load external GeoJSON file
-		$.getJSON("ky_counties_housing.json", function (data) {
-			dataLayer = L.geoJson(data, {
-				style: function (feature) { // style each feature of GeoJson layer
-					return {
-						color: '#dddddd', // set stroke color
-						weight: 2, // set stroke weight
-						fillOpacity: 1, // override defautl fill opacity
-						fillColor: '#1f78b4' // set fill color
-                        }
-                      }
-            
+        $.getJSON("ky_counties_housing.json", function(data) {
+            dataLayer = L.geoJson(data, {
+                style: function(feature) { // style each feature of GeoJson layer
+                    return {
+                        color: '#dddddd', // set stroke color
+                        weight: 2, // set stroke weight
+                        fillOpacity: 1, // override defautl fill opacity
+                        fillColor: '#1f78b4' // set fill color
+                    }
+                }
+
             }).addTo(map); // add the Leaflet GeoJson layer to the map
             //call the function to initially draw the legend
-			drawLegend();
+            drawLegend();
             //first calculated the classification break ranges, looped through all the layers, and assigned them a color value //based upon the global variable attribute
             drawMap();
             //call the finction to initially draw the info panel
             drawInfo();
             buildUI();
-});
+        });
 
-		
-		function drawMap() {
+
+        function drawMap() {
             //call function to determine class breaks and assign return value to variable
-			var breaks = getClassBreaks();
+            var breaks = getClassBreaks();
             //loop through each layer of the GeoJson layer
-			dataLayer.eachLayer(function (layer) {
+            dataLayer.eachLayer(function(layer) {
                 //create shorthand variable to access layer properties
-				var props = layer.feature.properties;
+                var props = layer.feature.properties;
                 //change the fill color of the layer using the layer's attribute values
-				layer.setStyle({
-					fillColor: getColor(props[attribute] /
-						props[norm], breaks)
-				});
-                
+                layer.setStyle({
+                    fillColor: getColor(props[attribute] /
+                        props[norm], breaks)
+                });
+
                 //set the actions when users move over/out a feature(state) 
                 layer.on('mouseover', function() {
-                    updateInfo(this);  //the info panel will update when user move to current feature
+                    updateInfo(this); //the info panel will update when user move to current feature
                     dataLayer.on('mouseover', function() {
                         $(".info").show(); //when the mouse over the feature, the info panel for this feature will show up
                     });
                     layer.setStyle({ //when the mouse over the feature, the fill color of selected feature will become yellow
-                        fillColor:'yellow'
+                        fillColor: 'yellow'
                     });
                 });
-                
+
                 layer.on('mouseout', function() { //declare the function for the result when user move mouse over a feature
                     updateInfo(this);
-                    dataLayer.on('mouseout', function() { 
+                    dataLayer.on('mouseout', function() {
                         $(".info").hide(); //when the mouse leave the feature, the info panel will disappear
                     });
                     layer.setStyle({ //the fill color of this feature will recover back to original style
-                        fillColor:'#1f78b4'
+                        fillColor: '#1f78b4'
                     });
                 });
-    
+
                 //bind a tooltip to the layer, populated with calculated layer attribute values, a popup window will show the //detail infomation of the selected county when user click.
-                layer.bindPopup("<b>"+layer.feature.properties["NAME"]+" County</b></br>" +
-                        labels[attribute] + ": " + ((layer.feature.properties[attribute]/
-                                layer.feature.properties[norm])*100).toLocaleString());
-			    });
-            
+                layer.bindPopup("<b>" + layer.feature.properties["NAME"] + " County</b></br>" +
+                    labels[attribute] + ": " + ((layer.feature.properties[attribute] /
+                        layer.feature.properties[norm]) * 100).toLocaleString());
+            });
+
             //legend to be updated every time the map is updated. call the function to show the content of the legend, sending //the breaks array as argument
-			updateLegend(breaks);
-}
-        
+            updateLegend(breaks);
+        }
+
         function buildUI() {
-        //Applying the user selected value to the map, 
-        $('select[id="vacant"]').change(function() {
-        attribute = $(this).val();//return the attribute value of the currently selected option 
-        //dynamically recalculating the class breaks and drawing colors to the map (and legend) by selecting a new data //attribute.
-        drawMap();    
-      });
-}
+            //Applying the user selected value to the map, 
+            $('select[id="vacant"]').change(function() {
+                attribute = $(this).val(); //return the attribute value of the currently selected option 
+                //dynamically recalculating the class breaks and drawing colors to the map (and legend) by selecting a new data //attribute.
+                drawMap();
+            });
+        }
 
-		function getClassBreaks() {
+        function getClassBreaks() {
             //create empty array to hold range of data values
-			var values = [];
-            
+            var values = [];
+
             //loop through each layer
-			dataLayer.eachLayer(function (layer) {
+            dataLayer.eachLayer(function(layer) {
                 //calculate the normalized value of the layer's data attribute
-				var value = layer.feature.properties[attribute] / layer.feature.properties[norm];
+                var value = layer.feature.properties[attribute] / layer.feature.properties[norm];
                 //push the value into the array
-				values.push(value);
-			});
+                values.push(value);
+            });
             //use simple statistics to create 5 class ranges (5 arrays of values)
-			var clusters = ss.ckmeans(values, 5);
+            var clusters = ss.ckmeans(values, 5);
             //JS map method returns an array of the low and high values from each cluster
-			var breaks = clusters.map(function (cluster) {
-				return [cluster[0], cluster.pop()];
-			});
+            var breaks = clusters.map(function(cluster) {
+                return [cluster[0], cluster.pop()];
+            });
             //return array of arrays 
-			return breaks;
-}
+            return breaks;
+        }
 
-       function getColor(d, breaks) {
-           //function accepts a single normalized data attribute value
-           //and users a series of conditional statements to determine which color value to return the function caller
-			if (d <= breaks[0][1]) {
-				return '#f1eef6';
-			} else if (d <= breaks[1][1]) {
-				return '#bdc9e1';
-			} else if (d <= breaks[2][1]) {
-				return '#74a9cf';
-			} else if (d <= breaks[3][1]) {
-				return '#2b8cbe'
-			} else if (d <= breaks[4][1]) {
-				return '#045a8d'
-			}
-}
+        function getColor(d, breaks) {
+            //function accepts a single normalized data attribute value
+            //and users a series of conditional statements to determine which color value to return the function caller
+            if (d <= breaks[0][1]) {
+                return '#f1eef6';
+            } else if (d <= breaks[1][1]) {
+                return '#bdc9e1';
+            } else if (d <= breaks[2][1]) {
+                return '#74a9cf';
+            } else if (d <= breaks[3][1]) {
+                return '#2b8cbe'
+            } else if (d <= breaks[4][1]) {
+                return '#045a8d'
+            }
+        }
 
-    //created the legend, leave it empty    
-    function drawLegend() {
-        var legend = L.control({position: 'topleft'}); //legend postion in the map
-        //when the legend is added to the map
-        legend.onAdd = function(map) {
-        //create a new HTML <div> element and give it a class name of "lengend"
-        var div = L.DomUtil.create('div', 'legend');
-        return div;
-        };
-        legend.addTo(map);
-}
-    //define another function which updated the content of that existing legend      
-    function updateLegend(breaks) { //accepts breaks array as a parameter.
+        //created the legend, leave it empty    
+        function drawLegend() {
+            var legend = L.control({
+                position: 'topleft'
+            }); //legend postion in the map
+            //when the legend is added to the map
+            legend.onAdd = function(map) {
+                //create a new HTML <div> element and give it a class name of "lengend"
+                var div = L.DomUtil.create('div', 'legend');
+                return div;
+            };
+            legend.addTo(map);
+        }
+        //define another function which updated the content of that existing legend      
+        function updateLegend(breaks) { //accepts breaks array as a parameter.
             //created legend using its class ($('.legend')) and add the <h3> header information to the legend
             var legend = $('.legend').html("<h3>" + labels[attribute] + "</h3><ul>"); //populate it with the name of our data                                                                           //attribute
             //for each our breaks 
-            for (var i = 0; i <= breaks.length-1; i++) {
+            for (var i = 0; i <= breaks.length - 1; i++) {
                 //detemrine the color associated with each break value, including the lower range value
                 var color = getColor(breaks[i][0], breaks);
                 //insert the content for each class break into the existing legend
                 legend.append(
                     '<span style="background:' + color + '"></span> ' +
-                    '<label>'+(breaks[i][0]*100).toLocaleString() + ' &mdash; ' + 
-                    (breaks[i][1]*100).toLocaleString()+' %'+ '</label>'); //format of the break numbers
+                    '<label>' + (breaks[i][0] * 100).toLocaleString() + ' &mdash; ' +
+                    (breaks[i][1] * 100).toLocaleString() + ' %' + '</label>'); //format of the break numbers
             }
-}
-        
-    //create an empty info window    
-    function drawInfo() {
-    var info = L.control({position: 'topright'});//the window position in map
-    //when the info window is added to the map
-    info.onAdd = function(map) {
-        var div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-        return div;  
-    }
-    info.addTo(map);
-    //the empty info panel won't appear When the map first loads and the user hasn't moused over any counties yet 
-    $(".info").hide();
-}
-    //create a function to update or insert the content of the info window    
-    function updateInfo(layer) {
-    //declares the variable and assigns it the properties object of the layer 
-    var props = layer.feature.properties;
-    //the concatenated string information about that county and assgined them to the variable
-    var html = "<h3>"+props['NAME']+" County</h3>"+
-                "total # vacant units: <b>"+ props["VACANT"]+"</b><br>"+
-                "# vacant units for rent: <b>"+ props["VACANT_FOR"]+"</b><br>"+
-                "# vacant units, rented not occupied: <b>"+ props["VACANT_REN"]+"</b><br>"+
-                "# vacant units, for sale only: <b>"+ props["VACANT_FO2"]+"</b><br>"+
-                "# vacant units, sole not occupied: <b>"+ props["VACANT_SOL"]+"</b><br>"+
-                "# vacant units, for sale only: <b>"+ props["VACANT_SEA"]+"</b><br>"+
-                "# vacant units used for migratory workers: <b>"+ props["VACANT_MIG"]+"</b><br>"+
-                "# vacant units, other: <b>"+ props["VACANT_OTH"]+"</b>"
-    //select the div using its class 'info' and insert the string content
-    $(".info").html(html);
-}
-        
-	</script>
+        }
+
+        //create an empty info window    
+        function drawInfo() {
+            var info = L.control({
+                position: 'topright'
+            }); //the window position in map
+            //when the info window is added to the map
+            info.onAdd = function(map) {
+                var div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+                return div;
+            }
+            info.addTo(map);
+            //the empty info panel won't appear When the map first loads and the user hasn't moused over any counties yet 
+            $(".info").hide();
+        }
+        //create a function to update or insert the content of the info window    
+        function updateInfo(layer) {
+            //declares the variable and assigns it the properties object of the layer 
+            var props = layer.feature.properties;
+            //the concatenated string information about that county and assgined them to the variable
+            var html = "<h3>" + props['NAME'] + " County</h3>" +
+                "total # vacant units: <b>" + props["VACANT"] + "</b><br>" +
+                "# vacant units for rent: <b>" + props["VACANT_FOR"] + "</b><br>" +
+                "# vacant units, rented not occupied: <b>" + props["VACANT_REN"] + "</b><br>" +
+                "# vacant units, for sale only: <b>" + props["VACANT_FO2"] + "</b><br>" +
+                "# vacant units, sole not occupied: <b>" + props["VACANT_SOL"] + "</b><br>" +
+                "# vacant units, for sale only: <b>" + props["VACANT_SEA"] + "</b><br>" +
+                "# vacant units used for migratory workers: <b>" + props["VACANT_MIG"] + "</b><br>" +
+                "# vacant units, other: <b>" + props["VACANT_OTH"] + "</b>"
+                //select the div using its class 'info' and insert the string content
+            $(".info").html(html);
+        }
+
+    </script>
 
 </body>
 
