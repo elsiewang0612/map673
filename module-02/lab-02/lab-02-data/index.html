@@ -155,7 +155,7 @@
 			norm = "VACANT"; // asign initial variable to store normalizing data attribute
 
         $('select[id="vacant"]').change(function() {
-        attribute = $(this).val();  
+        attribute = $(this).val();
         drawMap();    
 });
         
@@ -167,10 +167,10 @@
 						weight: 2, // set stroke weight
 						fillOpacity: 1, // override defautl fill opacity
 						fillColor: '#1f78b4' // set fill color
-                };
-            }
-        
-			}).addTo(map); // add the Leaflet GeoJson layer to the map
+                        }
+                      }
+            
+            }).addTo(map); // add the Leaflet GeoJson layer to the map
 			drawLegend();
             drawMap();
             drawInfo();
@@ -186,15 +186,31 @@
 					fillColor: getColor(props[attribute] /
 						props[norm], breaks)
 				});
+                
+                
                 layer.on('mouseover', function() {
                     updateInfo(this);
                     dataLayer.on('mouseover', function() {
                         $(".info").show();
                     });
-                    dataLayer.on('mouseout', function() {
-                        $(".info").hide();    
+                    layer.setStyle({
+                        fillColor:'yellow'
                     });
                 });
+                
+                layer.on('mouseout', function() {
+                    updateInfo(this);
+                    dataLayer.on('mouseout', function() {
+                        $(".info").hide(); 
+                    });
+                    layer.setStyle({
+                        fillColor:'#1f78b4'
+                    });
+                });
+                
+                
+                
+                
                 layer.bindPopup("<b>"+layer.feature.properties["NAME"]+" County</b></br>" +
                         labels[attribute] + ": " + ((layer.feature.properties[attribute]/
                                 layer.feature.properties[norm])*100).toLocaleString());
