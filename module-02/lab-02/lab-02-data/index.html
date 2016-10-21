@@ -209,9 +209,10 @@
                     dataLayer.on('mouseout', function() {
                         $(".info").hide(); //when the mouse leave the feature, the info panel will disappear
                     });
-                    layer.setStyle({ //the fill color of this feature will recover back to original style
-                        fillColor: '#1f78b4'
-                    });
+                    layer.setStyle({
+                    fillColor: getColor(props[attribute] /
+                        props[norm], breaks)
+                });
                 });
 
                 //bind a tooltip to the layer, populated with calculated layer attribute values, a popup window will show the //detail infomation of the selected county when user click.
