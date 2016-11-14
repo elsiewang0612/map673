@@ -148,6 +148,7 @@
         }
 
         function Mapping(counties) {
+
             dataLayer = L.geoJson(counties, {
                 style: function(feature) {
                     return {
@@ -159,18 +160,18 @@
                 }
             }).addTo(map);
 
-            var breaks = getClassBreaks();
 
-            drawLegend(breaks);
-
-            drawMap(breaks);
+            drawMap();
 
         }
 
 
-        function drawMap(counties) {
+        function drawMap() {
+
             var breaks = getClassBreaks();
+
             console.log(breaks)
+
             dataLayer.eachLayer(function(layer) {
 
                 var props = layer.feature.properties;
@@ -195,22 +196,29 @@
                      + layer.feature.properties[attribute]);
             });
 
+            drawLegend(breaks);
+
+
 
         }
 
 
         function getClassBreaks() {
 
-			var values = [];
-			dataLayer.eachLayer(function (layer) {
-				var value = layer.feature.properties[attribute];
-				values.push(value);
-			});
-			var clusters = ss.ckmeans(values, 5);
-			var breaks = clusters.map(function (cluster) {
-				return [cluster[0], cluster.pop()];
-			});
-			return breaks;
+      			var values = [];
+      			dataLayer.eachLayer(function (layer) {
+      				var value = layer.feature.properties[attribute];
+
+              if(value) { // if value is true
+                values.push(Number(value));
+              }
+
+      			});
+      			var clusters = ss.ckmeans(values, 5);
+      			var breaks = clusters.map(function (cluster) {
+      				return [cluster[0], cluster.pop()];
+      			});
+      			return breaks;
 
 		}
 
