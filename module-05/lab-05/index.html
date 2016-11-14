@@ -193,7 +193,7 @@
                 });
                 });
                 layer.bindPopup("<b>" + layer.feature.properties["COUNTY"] + " County</b></br>"
-                     + layer.feature.properties[attribute]);
+                + layer.feature.properties[attribute] + "%");
             });
 
             drawLegend(breaks);
@@ -252,8 +252,8 @@
 
 					div.innerHTML +=
 						'<span style="background:' + color + '"></span> ' +
-						'<label>' + (breaks[i][0] * 100).toLocaleString() + ' &mdash; ' +
-						(breaks[i][1] * 100).toLocaleString() + '</label>';
+						'<label>' + (breaks[i][0]).toLocaleString() + ' &mdash; ' +
+						(breaks[i][1]).toLocaleString() + "%" + '</label>';
 				}
 				return div;
 			};
