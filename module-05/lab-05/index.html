@@ -16,23 +16,23 @@
             font-family: Lato, sans-serif;
             color: #0D0000;
         }
-        
+
         header {
             width: 80%;
             margin: 10px auto 10px auto;
         }
-        
+
         h1 {
             display: inline-block;
             margin-right: 20px;
             color: #001323;
         }
-        
+
         h2 {
             display: inline-block;
             color: #001323;
         }
-        
+
         #map {
             width: 80%;
             height: 540px;
@@ -40,12 +40,12 @@
             background: whitesmoke;
             border: 2px solid #dddedf;
         }
-        
+
         footer {
             padding: 6px 10%;
             width: 80%;
         }
-        
+
         .legend {
 			padding: 6px 8px;
 			font-size: 1em;
@@ -53,35 +53,35 @@
 			box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 			border-radius: 5px;
 		}
-		
+
 		.legend h3 {
 			font-size: 1.1em;
 			font-weight: normal;
 			color: #001323;
 			margin: 0 0 10px 0;
 		}
-		
+
 		.legend span {
 			width: 20px;
 			height: 20px;
 			float: left;
 			margin: 0 10px 4px 0;
 		}
-		
+
 		.legend label {
 			font-size: 1.1em;
 		}
-		
+
 		.legend label:after {
 			content: '';
 			display: block;
 			clear: both;
 		}
-        
+
         #ui-controls {
             margin-left: 10%;
         }
-        
+
         #ui-controls label {
             font-size: 1em;
             margin-right: 5px;
@@ -93,16 +93,16 @@
 <body>
     <header>
         <h1>2015 Forest Cover in Kenya</h1>
-        
+
     </header>
     <div id='map'></div>
 
     <footer>
         <p>Map authored by Xi Wang</p>
-        
+
     </footer>
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.1/simple_statistics.js"></script>      
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.1/simple_statistics.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
     <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -119,21 +119,21 @@
         });
 
         var dataLayer, // declare global variable for map units
-            attribute = "Percentage Forest Cover";// assign initial variable to store data attribute 
-            
+            attribute = "Percentage Forest Cover";// assign initial variable to store data attribute
+
 
         // QJuery AJAX request to load external GeoJSON file
         $.getJSON("kenyan_counties.geojson", function(counties) {
             Papa.parse('kenya_forest_2015.csv', {
-                download: true, 
-                header: true, 
+                download: true,
+                header: true,
                 complete: function(data) {
                     processData(counties, data);
                 }
             });
 
         });
-        
+
         function processData(counties, data) {
             for (var county in counties.features) {
                 var props = counties.features[county].properties;
@@ -146,7 +146,7 @@
             } // outer for loop is complete
             Mapping(counties);
         }
-        
+
         function Mapping(counties) {
             dataLayer = L.geoJson(counties, {
                 style: function(feature) {
@@ -159,7 +159,7 @@
                 }
             }).addTo(map);
 
-            var breaks = getClassBreaks(); 
+            var breaks = getClassBreaks();
 
             drawLegend(breaks);
 
@@ -170,23 +170,23 @@
 
         function drawMap(counties) {
             var breaks = getClassBreaks();
-            
+            console.log(breaks)
             dataLayer.eachLayer(function(layer) {
-                
+
                 var props = layer.feature.properties;
-            
+
                 layer.setStyle({
                     fillColor: getColor(props[attribute], breaks)
                 });
 
-                
+
                 layer.on('mouseover', function() {
                     layer.setStyle({
                         fillColor: 'yellow'
                     });
                 });
 
-                layer.on('mouseout', function() { 
+                layer.on('mouseout', function() {
                     layer.setStyle({
                     fillColor: getColor(props[attribute], breaks)
                 });
@@ -194,13 +194,13 @@
                 layer.bindPopup("<b>" + layer.feature.properties["COUNTY"] + " County</b></br>"
                      + layer.feature.properties[attribute]);
             });
-        
-            
+
+
         }
 
-        
+
         function getClassBreaks() {
-			
+
 			var values = [];
 			dataLayer.eachLayer(function (layer) {
 				var value = layer.feature.properties[attribute];
@@ -211,11 +211,11 @@
 				return [cluster[0], cluster.pop()];
 			});
 			return breaks;
-			
+
 		}
 
         function getColor(d, breaks) {
-            
+
             if (d <= breaks[0][1]) {
                 return '#f1eef6';
             } else if (d <= breaks[1][1]) {
@@ -228,13 +228,13 @@
                 return '#3690c0'
             }
         }
-  
+
         function drawLegend(breaks) {
-			
+
 			var legend = L.control({
 				position: 'bottomright'
 			});
-			
+
 			legend.onAdd = function () {
 				var div = L.DomUtil.create('div', 'legend');
 				div.innerHTML = "<h3>" + attribute + "</h3>";
@@ -250,10 +250,10 @@
 				return div;
 			};
 			legend.addTo(map);
-		}    
-        
+		}
 
-        
+
+
     </script>
 
 </body>
