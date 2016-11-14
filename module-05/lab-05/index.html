@@ -99,7 +99,7 @@
 
     <footer>
         <p>Map authored by Xi Wang</p>
-        <p>The data was collected in the 2010 census</p>
+        
     </footer>
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.1/simple_statistics.js"></script>      
@@ -159,7 +159,7 @@
                 }
             }).addTo(map);
 
-            var breaks = getClassBreaks(); //call the function after drawing the counties
+            var breaks = getClassBreaks(); 
 
             drawLegend(breaks);
 
@@ -169,20 +169,17 @@
 
 
         function drawMap(counties) {
-            
-            
-            
             var breaks = getClassBreaks();
             
             dataLayer.eachLayer(function(layer) {
-                //create shorthand variable to access layer properties
+                
                 var props = layer.feature.properties;
-                //change the fill color of the layer using the layer's attribute values
+            
                 layer.setStyle({
                     fillColor: getColor(props[attribute], breaks)
                 });
 
-                //set the actions when users move over/out a feature(state) 
+                
                 layer.on('mouseover', function() {
                     layer.setStyle({
                         fillColor: 'yellow'
@@ -218,8 +215,7 @@
 		}
 
         function getColor(d, breaks) {
-            //function accepts a single normalized data attribute value
-            //and users a series of conditional statements to determine which color value to return the function caller
+            
             if (d <= breaks[0][1]) {
                 return '#f1eef6';
             } else if (d <= breaks[1][1]) {
