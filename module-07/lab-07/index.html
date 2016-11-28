@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>673 Module 07 Carto Starter Template</title>
+    <title>2000 Kentucky Unemployment Rate</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
@@ -17,18 +17,17 @@
             margin: 10px auto;
             border: 1px solid #d3d3d3;
         }
-        
 
     </style>
 </head>
 
 <body>
-<h1>2000 Kentucky Unemployment Distribution</h1>
+    <h1>2000 Kentucky Unemployment Distribution</h1>
     <h2>Umployment Percentage by County</h2>
     <p>This map present the unploymnet rate distribution across the Kentucky in 2000.The formula for calculating the unemployment rate is that the number of unemployed persons is divided by labor force. The labor force are all the members of a particular organization or population who are able to work, viewed collectively.</p>
-    
+
     <div id="map"></div>
-    
+
     <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
     <script>
         var map = L.map('map', {
@@ -53,21 +52,29 @@
         };
 
         cartodb.createLayer(map, sourceObject).addTo(map).done(function(layer) {
-         var legend = new cdb.geo.ui.Legend({
-           type: "custom",
-           data: [
-             { name: "2.7% - 4.9%", value: "#f6d2a9" },
-             { name: "4.9% - 6.7%", value: "#f3aa84" },
-             { name: "6.7% - 8.2%", value: "#ea8171" },
-             { name: "8.2% - 9.1%", value: "#d55d6a" },
-             { name: "9.1% - 10.5%", value: "#b13f64" }  
-           ]
-         });
-         $('#map').append(legend.render().el);
-            
+            var legend = new cdb.geo.ui.Legend({
+                type: "custom",
+                data: [{
+                    name: "2.7% - 4.9%",
+                    value: "#f6d2a9"
+                }, {
+                    name: "4.9% - 6.7%",
+                    value: "#f3aa84"
+                }, {
+                    name: "6.7% - 8.2%",
+                    value: "#ea8171"
+                }, {
+                    name: "8.2% - 9.1%",
+                    value: "#d55d6a"
+                }, {
+                    name: "9.1% - 10.5%",
+                    value: "#b13f64"
+                }]
+            });
+            $('#map').append(legend.render().el);
+
         });
-        
-    
+
     </script>
 </body>
 
