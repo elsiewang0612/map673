@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Crashes in Kentucky</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        
+        header {
+            width: 80%;
+            margin: 10px auto 10px auto;
+        }
+        
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+        }
+        
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 64%;
+        }
+        
+        #side-panel {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 36%;
+            background: whitesmoke;
+            border-right: 2px solid #1C9976;
+            overflow-y: scroll;
+        }
+        
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+        
+        .legend {
+            padding: 6px 8px;
+            font-size: 1em;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        
+        .legend h3 {
+            font-size: 1.1em;
+            font-weight: normal;
+            color: #001323;
+            margin: 0 0 10px 0;
+        }
+        
+        .legend span {
+            width: 20px;
+            height: 20px;
+            float: left;
+            margin: 0 10px 4px 0;
+        }
+        
+        .legend label {
+            font-size: 1.1em;
+        }
+        
+        .legend label:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        
+        #ui-controls {
+            margin-left: 10%;
+        }
+        
+        #ui-controls label {
+            font-size: 1em;
+            margin-right: 5px;
+        }
+        
+        .info h3 {
+            margin: 0;
+            padding: 6px 8px;
+            font-size: 1em;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div id='side-panel'></div>
+
+    <header>
+        <h1>Crashes in Kentucky 2011 - 2015</h1>
+        <h2></h2>
+    </header>
+
+    <div id='ui-controls'>
+        <label>Choose a data attribute:</label>
+        <select id="crashes">
+            <option value="TOTAL" selected>Overall Crashes Rate 2011-2015 </option>
+            <option value="ALCOHOL">Crashes Involving Alcohol </option> 
+            <option value="DRUG">Crashes Involving Drugs</option>
+            <option value="SPEEDING">Crashes Involving Unsafe Speeding</option>
+            <option value="MOTORCYCLE">Crashes Involving Motorcycle</option>
+            <option value="TRUCK">Crashes Involving Trucks</option>
+        </select>
+    </div>
+    <div id='map'></div>
+
+    <footer>
+        <p>Map authored by Xi Wang</p>
+        <p>The datasource was from Kentucky Transportation Center</p>
+    </footer>
+    <script src="http://code.jquery.com/jquery-1.12.2.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.1/simple_statistics.js"></script>
+    <script>
+        //set initial options for the map
+    
+        
+        
+        var options = {
+            center: [38.2, -85.8],
+            zoom: 6.8,
+            minZoom: 5,
+            maxZoom: 9,
+            dragging: true,
+            zoomControl: true
+        }
+
+        //create an object to associate the property names with more meaningful labels for the user 
+        var labels = {
+            "TOTAL": "% overall crashes rate",
+            "ALCOHOL": "% Crashes Involving Alcohol",
+            "DRUG": "% Crashes Involving Drugs",
+            "SPEEDING": "% Crashes Involving Unsafe Speeding",
+            "MOTORCYCLE": "% Crashes Involving Motorcycle",
+            "TRUCK": "% Crashes Involving Trucks"
+        }
+
+        //create a new Leaflet map, passing map options, and assign to variable
+
+        var map = L.map('map', options);
+        
+        var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+        subdomains: 'abcd',
+        maxZoom: 19
+    });
+    
+    // adds these tiles to the map
+    map.addLayer(tiles);
+
+        var dataLayer, // declare global variable for map units
+            attribute = "TOTAL", // assign initial variable to store data attribute 
+            norm = "POP"; // asign initial variable to store normalizing data attribute
+
+        // QJuery AJAX request to load external GeoJSON file
+        $.getJSON("ky_crashes_final.geojson", function(data) {
+            dataLayer = L.geoJson(data, {
+                style: function(feature) { // style each feature of GeoJson layer
+                    return {
+                        color: '#dddddd', // set stroke color
+                        weight: 2, // set stroke weight
+                        fillOpacity: 1, // override defautl fill opacity
+                        fillColor: '#1f78b4' // set fill color
+                    }
+                }
+
+            }).addTo(map); // add the Leaflet GeoJson layer to the map
+            //call the function to initially draw the legend
+            drawLegend();
+            //first calculated the classification break ranges, looped through all the layers, and assigned them a color value //based upon the global variable attribute
+            drawMap();
+            //call the finction to initially draw the info panel
+            drawInfo();
+            buildUI();
+        });
+
+
+        function drawMap() {
+            //call function to determine class breaks and assign return value to variable
+            var breaks = getClassBreaks();
+            //loop through each layer of the GeoJson layer
+            dataLayer.eachLayer(function(layer) {
+                //create shorthand variable to access layer properties
+                var props = layer.feature.properties;
+                //change the fill color of the layer using the layer's attribute values
+                layer.setStyle({
+                    fillColor: getColor(props[attribute] /
+                        props[norm], breaks)
+                });
+
+                //set the actions when users move over/out a feature(state) 
+                layer.on('mouseover', function() {
+                    updateInfo(this); //the info panel will update when user move to current feature
+                    dataLayer.on('mouseover', function() {
+                        $(".info").show(); //when the mouse over the feature, the info panel for this feature will show up
+                    });
+                    layer.setStyle({ //when the mouse over the feature, the fill color of selected feature will become yellow
+                        fillColor: '#737373'
+                    });
+                });
+
+                layer.on('mouseout', function() { //declare the function for the result when user move mouse over a feature
+                    updateInfo(this);
+                    dataLayer.on('mouseout', function() {
+                        $(".info").hide(); //when the mouse leave the feature, the info panel will disappear
+                    });
+                    layer.setStyle({
+                        fillColor: getColor(props[attribute] /
+                            props[norm], breaks)
+                    });
+                });
+
+                //bind a tooltip to the layer, populated with calculated layer attribute values, a popup window will show the //detail infomation of the selected county when user click.
+                layer.bindPopup("<b>" + layer.feature.properties["NAME"] + " County</b></br>" +
+                    labels[attribute] + ": " + ((layer.feature.properties[attribute] /
+                        layer.feature.properties[norm]) * 100000).toLocaleString()
+                );
+            });
+
+            //legend to be updated every time the map is updated. call the function to show the content of the legend, sending //the breaks array as argument
+            updateLegend(breaks);
+        }
+
+        function buildUI() {
+            //Applying the user selected value to the map, 
+            $('select[id="crashes"]').change(function() {
+                attribute = $(this).val(); //return the attribute value of the currently selected option 
+                //dynamically recalculating the class breaks and drawing colors to the map (and legend) by selecting a new data //attribute.
+                drawMap();
+            });
+        }
+
+        function getClassBreaks() {
+            //create empty array to hold range of data values
+            var values = [];
+
+            //loop through each layer
+            dataLayer.eachLayer(function(layer) {
+                //calculate the normalized value of the layer's data attribute
+                var value = layer.feature.properties[attribute] / layer.feature.properties[norm];
+                //push the value into the array
+                values.push(value);
+            });
+            //use simple statistics to create 5 class ranges (5 arrays of values)
+            var clusters = ss.ckmeans(values, 7);
+            //JS map method returns an array of the low and high values from each cluster
+            var breaks = clusters.map(function(cluster) {
+                return [cluster[0], cluster.pop()];
+            });
+            //return array of arrays 
+            return breaks;
+        }
+
+        function getColor(d, breaks) {
+            //function accepts a single normalized data attribute value
+            //and users a series of conditional statements to determine which color value to return the function caller
+            if (d <= breaks[0][1]) {
+                return '#ffffb2';
+            } else if (d <= breaks[1][1]) {
+                return '#fed976';
+            } else if (d <= breaks[2][1]) {
+                return '#feb24c';
+            } else if (d <= breaks[3][1]) {
+                return '#fd8d3c'
+            } else if (d <= breaks[4][1]) {
+                return '#fc4e2a'
+            } else if (d <= breaks[5][1]) {
+                return '#e31a1c'
+            } else if (d <= breaks[6][1]) {
+                return '#b10026'
+            }
+        }
+
+        //created the legend, leave it empty    
+        function drawLegend() {
+            var legend = L.control({
+                position: 'topleft'
+            }); //legend postion in the map
+            //when the legend is added to the map
+            legend.onAdd = function(map) {
+                //create a new HTML <div> element and give it a class name of "lengend"
+                var div = L.DomUtil.create('div', 'legend');
+                return div;
+            };
+            legend.addTo(map);
+        }
+        //define another function which updated the content of that existing legend      
+        function updateLegend(breaks) { //accepts breaks array as a parameter.
+            //created legend using its class ($('.legend')) and add the <h3> header information to the legend
+            var legend = $('.legend').html("<h3>" + labels[attribute] + "</h3><ul>"); //populate it with the name of our data                                                                           //attribute
+            //for each our breaks 
+            for (var i = 0; i <= breaks.length - 1; i++) {
+                //detemrine the color associated with each break value, including the lower range value
+                var color = getColor(breaks[i][0], breaks);
+                //insert the content for each class break into the existing legend
+                legend.append(
+                    '<span style="background:' + color + '"></span> ' +
+                    '<label>' + (breaks[i][0] * 100).toLocaleString() + ' &mdash; ' +
+                    (breaks[i][1] * 100).toLocaleString() + ' %' + '</label>'); //format of the break numbers
+            }
+        }
+
+        //create an empty info window    
+        function drawInfo() {
+            var info = L.control({
+                position: 'topright'
+            }); //the window position in map
+            //when the info window is added to the map
+            info.onAdd = function(map) {
+                var div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+                return div;
+            }
+            info.addTo(map);
+            //the empty info panel won't appear When the map first loads and the user hasn't moused over any counties yet 
+            $(".info").hide();
+        }
+        //create a function to update or insert the content of the info window    
+        function updateInfo(layer) {
+            //declares the variable and assigns it the properties object of the layer 
+            var props = layer.feature.properties;
+            //the concatenated string information about that county and assgined them to the variable
+            var html = "<h3>" + props['NAME'] + " County</h3>" +
+                "Population: <b>" + props["POP"] + "</b><br>" +
+                "# crashes involving alcohol: <b>" + props["ALCOHOL"] + "</b><br>" +
+                "# crashes invovling drugs: <b>" + props["DRUG"] + "</b><br>" +
+                "# crashes involving unsafe speeding: <b>" + props["SPEEDING"] + "</b><br>" +
+                "# crashes involving motocycles: <b>" + props["MOTORCYCLE"] + "</b><br>" +
+                "# crashes involving trucks: <b>" + props["TRUCK"] + "</b>"
+                //select the div using its class 'info' and insert the string content
+            $(".info").html(html);
+        }
+
+    </script>
+
+</body>
+
+</html>
