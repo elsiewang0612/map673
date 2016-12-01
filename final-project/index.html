@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-    <script type="text/javascript" src="jquery-1.7.2.js"></script>
-    <script type="text/javascript" src="jquery.sparkline.js"></script>
+   
     
     <style>
         body {
@@ -157,7 +156,6 @@
             border-radius: 5px;
         }
         
-
     </style>
 </head>
 
@@ -173,7 +171,7 @@
              <p>The crash data is collected from "Analysis of Traffic Crash Data in Kentucky (2011–2015)" authored by the Kentucky Transportation Center (KTC). The crash data are stored in the Collision Report Analysis for Safer Highways (CRASH) database. This database is updated daily so the number of crashes in a given calendar year will continue to change for a substantial time after the end of that year.The population data is from US census.</p>
              <p>The map is authored by Xi Wang for MAP673, University of Kentucky</p>
     </div>
-
+    
     <header>
         <h1>Crashes in Kentucky 2011 - 2015</h1>
         <h2></h2>
@@ -191,17 +189,22 @@
         </select>
     </div>
     <div id='map'></div>
+    
+<!--
+    <div id="info">
+        <p>trend grades 1 &ndash; 12</p>
+        <p><span class="crashspark"></span></p>
+    </div>
+-->
 
     <footer>
         <p>Map authored by Xi Wang</p>
     </footer>
-    
-    <script type="text/javascript" src="jquery-1.7.2.js"></script>
-    <script type="text/javascript" src="jquery.sparkline.js"></script>
-    
+
     <script src="http://code.jquery.com/jquery-1.12.2.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.1/simple_statistics.js"></script>
+    <script src="sparkline.js"></script>
     <script>
         //set initial options for the map
         
@@ -281,7 +284,8 @@
                 layer.on('mouseover', function() {
                     updateInfo(this); //the info panel will update when user move to current feature
                     dataLayer.on('mouseover', function() {
-                        $(".info").show(); //when the mouse over the feature, the info panel for this feature will show up
+                        $(".info").show();  
+         
                     });
                     layer.setStyle({ //when the mouse over the feature, the fill color of selected feature will become yellow
                         fillColor: '#737373'
@@ -299,14 +303,9 @@
                     });
                 });
 
-                //bind a tooltip to the layer, populated with calculated layer attribute values, a popup window will show the //detail infomation of the selected county when user click.
-                layer.bindPopup("<b>" + layer.feature.properties["NAME"] + " County</b></br>" +
-                    labels[attribute] + ": " + ((layer.feature.properties[attribute] /
-                        layer.feature.properties[norm]) * 100).toLocaleString()
+                layer.bindPopup("<b>" + layer.feature.properties["NAME"] + " County</b></br>" + labels[attribute] + ": " + ((layer.feature.properties[attribute] / layer.feature.properties[norm]) * 100).toLocaleString()
                 );
             });
-
-            //legend to be updated every time the map is updated. call the function to show the content of the legend, sending //the breaks array as argument
             updateLegend(breaks);
         }
         
@@ -418,6 +417,20 @@
                 "# crashes involving trucks: <b>" + props["TRUCK"] + "</b>"
                 //select the div using its class 'info' and insert the string content
             $(".info").html(html);
+//            
+//            var crashvalue = [];
+//                        
+//                        $('.crashspark').sparkline(crashvalue, {
+//                width: '180px',
+//                lineColor: '#D96D02',
+//                fillColor: '#d98939 ',
+//                spotColor: '#1C9976',
+//                minSpotColor: '#1C9976',
+//                maxSpotColor: '#1C9976',
+//                spotRadius: 0,
+//                lineWidth: 2
+//            });
+         
         }
 
     </script>
