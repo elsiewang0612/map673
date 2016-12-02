@@ -181,8 +181,6 @@
         <p>The map is authored by Xi Wang for MAP673, University of Kentucky</p>
     </div>
 
-
-
     <header>
         <h1>Crashes in Kentucky 2011 - 2015</h1>
         <h2></h2>
@@ -282,19 +280,19 @@
                         props[norm], breaks)
                 });
 
-                //set the actions when users move over/out a feature(state)
+               
                 layer.on('mouseover', function() {
-                    updateInfo(this); //the info panel will update when user move to current feature
+                    updateInfo(this); 
                     dataLayer.on('mouseover', function() {
                         $(".info").show();
 
                     });
-                    layer.setStyle({ //when the mouse over the feature, the fill color of selected feature will become yellow
+                    layer.setStyle({ 
                         fillColor: '#737373'
                     });
                 });
 
-                layer.on('mouseout', function() { //declare the function for the result when user move mouse over a feature
+                layer.on('mouseout', function() { 
                     updateInfo(this);
                     dataLayer.on('mouseout', function() {
                         $(".info").hide(); //when the mouse leave the feature, the info panel will disappear
@@ -313,10 +311,9 @@
 
 
         function buildUI() {
-            //Applying the user selected value to the map,
+            
             $('select[id="crashes"]').change(function() {
-                attribute = $(this).val(); //return the attribute value of the currently selected option
-                //dynamically recalculating the class breaks and drawing colors to the map (and legend) by selecting a new data //attribute.
+                attribute = $(this).val(); //return the attribute value of 
                 drawMap();
             });
         }
@@ -432,7 +429,6 @@
                lineWidth: 2
            });
 
-            $(".info").html(html);
         }
 
     </script>
