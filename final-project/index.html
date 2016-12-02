@@ -87,12 +87,6 @@
             float: left;
             margin: 0 0 0px 0px;
         }
-<<<<<<< Updated upstream
-
-
-=======
-        
->>>>>>> Stashed changes
         p {
             font-size: 1em;
             color: #001323;
@@ -158,24 +152,23 @@
         }
         .info {
           position: absolute;
-          top: 15px;
+          top: 20px;
           right: 15px;
           background: rgba(255, 255, 255, 0.8);
           box-shadow: 0 0 19px rgba(0, 0, 0, 0.2);
           border-radius: 5px;
           padding: 15px 8px;
-          z-index: 700;
+          z-index: 800;
+          font-size: 0.9em;
         }
         .info h3 {
             margin: 0;
             padding: 6px 8px;
-            font-size: 1em;
+            font-size: 1em;   
         }
 
     </style>
 </head>
-
-<body>
 
     <div id='side-panel'>
         <h2>Car Crashes</h2>
@@ -187,6 +180,8 @@
         <p>The crash data is collected from "Analysis of Traffic Crash Data in Kentucky (2011–2015)" authored by the Kentucky Transportation Center (KTC). The crash data are stored in the Collision Report Analysis for Safer Highways (CRASH) database. This database is updated daily so the number of crashes in a given calendar year will continue to change for a substantial time after the end of that year.The population data is from US census.</p>
         <p>The map is authored by Xi Wang for MAP673, University of Kentucky</p>
     </div>
+
+<body> 
 
     <header>
         <h1>Crashes in Kentucky 2011 - 2015</h1>
@@ -206,33 +201,20 @@
     </div>
     <div id='map'></div>
 
-<<<<<<< Updated upstream
-
-    <div class="info">
-        <div class="stats"></div>
-=======
-    <!--
+    <div class="info"></div>
+    
+    <div class="stats"></div>
+    
     <div id="info">
-        <p>trend grades 1 &ndash; 12</p>
->>>>>>> Stashed changes
-        <p><span class="crashspark"></span></p>
+        <p><span class="crashspark"></span></p> 
     </div>
-
-
-    <footer>
-        <p>Map authored by Xi Wang</p>
-    </footer>
 
     <script src="http://code.jquery.com/jquery-1.12.2.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.1/simple_statistics.js"></script>
     <script src="sparkline.js"></script>
     <script>
-<<<<<<< Updated upstream
-        //set initial options for the map
 
-=======
->>>>>>> Stashed changes
         var options = {
             center: [37.832425, -85.693959],
             zoom: 6.8,
@@ -242,7 +224,7 @@
             zoomControl: false
         }
 
-        //create an object to associate the property names with more meaningful labels for the user
+        
         var labels = {
             "TOTAL": "% overall crashes rate",
             "ALCOHOL": "% Crashes Involving Alcohol",
@@ -252,42 +234,29 @@
             "TRUCK": "% Crashes Involving Trucks"
         }
 
-        //create a new Leaflet map, passing map options, and assign to variable
-
         var map = L.map('map', options);
 
         var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-<<<<<<< Updated upstream
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
         subdomains: 'abcd',
         maxZoom: 19
     });
 
-    // adds these tiles to the map
     map.addLayer(tiles);
-=======
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-            subdomains: 'abcd',
-            maxZoom: 19
-        });
 
-        // adds these tiles to the map
-        map.addLayer(tiles);
->>>>>>> Stashed changes
+        var dataLayer, 
+            attribute = "TOTAL", 
+            norm = "POP"; 
 
-        var dataLayer, // declare global variable for map units
-            attribute = "TOTAL", // assign initial variable to store data attribute
-            norm = "POP"; // asign initial variable to store normalizing data attribute
-
-        // QJuery AJAX request to load external GeoJSON file
+       
         $.getJSON("ky_crashes_final.geojson", function(data) {
             dataLayer = L.geoJson(data, {
-                style: function(feature) { // style each feature of GeoJson layer
+                style: function(feature) { 
                     return {
-                        color: '#dddddd', // set stroke color
-                        weight: 2, // set stroke weight
-                        fillOpacity: 1, // override defautl fill opacity
-                        fillColor: '#1f78b4' // set fill color
+                        color: '#dddddd', 
+                        weight: 2, 
+                        fillOpacity: 1, 
+                        fillColor: '#1f78b4' 
                     }
                 }
 
@@ -303,13 +272,13 @@
 
 
         function drawMap() {
-            //call function to determine class breaks and assign return value to variable
+            
             var breaks = getClassBreaks();
-            //loop through each layer of the GeoJson layer
+            
             dataLayer.eachLayer(function(layer) {
-                //create shorthand variable to access layer properties
+                
                 var props = layer.feature.properties;
-                //change the fill color of the layer using the layer's attribute values
+                
                 layer.setStyle({
                     fillColor: getColor(props[attribute] /
                         props[norm], breaks)
@@ -355,29 +324,28 @@
         }
 
         function getClassBreaks() {
-            //create empty array to hold range of data values
+            
             var values = [];
 
-            //loop through each layer
+            
             dataLayer.eachLayer(function(layer) {
-                //calculate the normalized value of the layer's data attribute
+               
                 var value = layer.feature.properties[attribute] / layer.feature.properties[norm];
-                //push the value into the array
+                
                 values.push(value);
             });
-            //use simple statistics to create 5 class ranges (5 arrays of values)
+            
             var clusters = ss.ckmeans(values, 7);
-            //JS map method returns an array of the low and high values from each cluster
+            
             var breaks = clusters.map(function(cluster) {
                 return [cluster[0], cluster.pop()];
             });
-            //return array of arrays
+            
             return breaks;
         }
 
         function getColor(d, breaks) {
-            //function accepts a single normalized data attribute value
-            //and users a series of conditional statements to determine which color value to return the function caller
+            
             if (d <= breaks[0][1]) {
                 return '#ffffb2';
             } else if (d <= breaks[1][1]) {
@@ -399,50 +367,47 @@
         function drawLegend() {
             var legend = L.control({
                 position: 'topleft'
-            }); //legend postion in the map
-            //when the legend is added to the map
+            }); 
             legend.onAdd = function(map) {
-                //create a new HTML <div> element and give it a class name of "lengend"
+                
                 var div = L.DomUtil.create('div', 'legend');
                 return div;
             };
             legend.addTo(map);
         }
-        //define another function which updated the content of that existing legend
-        function updateLegend(breaks) { //accepts breaks array as a parameter.
-            //created legend using its class ($('.legend')) and add the <h3> header information to the legend
-            var legend = $('.legend').html("<h3>" + labels[attribute] + "</h3><ul>"); //populate it with the name of our data                                                                           //attribute
-            //for each our breaks
+        
+        function updateLegend(breaks) { 
+            
+            var legend = $('.legend').html("<h3>" + labels[attribute] + "</h3><ul>"); 
             for (var i = 0; i <= breaks.length - 1; i++) {
-                //detemrine the color associated with each break value, including the lower range value
+                
                 var color = getColor(breaks[i][0], breaks);
-                //insert the content for each class break into the existing legend
+                
                 legend.append(
                     '<span style="background:' + color + '"></span> ' +
                     '<label>' + (breaks[i][0] * 100).toLocaleString() + ' &mdash; ' +
-                    (breaks[i][1] * 100).toLocaleString() + ' %' + '</label>'); //format of the break numbers
+                    (breaks[i][1] * 100).toLocaleString() + ' %' + '</label>'); 
             }
         }
 
-        //create an empty info window
-        // function drawInfo() {
-        //     var info = L.control({
-        //         position: 'topright'
-        //     }); //the window position in map
-        //     //when the info window is added to the map
-        //     info.onAdd = function(map) {
-        //         var div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-        //         return div;
-        //     }
-        //     info.addTo(map);
-        //     //the empty info panel won't appear When the map first loads and the user hasn't moused over any counties yet
-        //     $(".info").hide();
-        // }
-        //create a function to update or insert the content of the info window
+        
+         function drawInfo() {
+             var info = L.control({
+                 position: 'topright'
+             }); 
+             info.onAdd = function(map) {
+                 var div = L.DomUtil.create('div', 'info'); 
+                 return div;
+             }
+             info.addTo(map);
+             
+             $(".info").hide();
+         }
+        
         function updateInfo(layer) {
-            //declares the variable and assigns it the properties object of the layer
+            
             var props = layer.feature.properties;
-            //the concatenated string information about that county and assgined them to the variable
+            
             var html = "<h3>" + props['NAME'] + " County</h3>" +
                 "Population: <b>" + props["POP"] + "</b><br>" +
                 "# crashes involving alcohol: <b>" + props["ALCOHOL"] + "</b><br>" +
@@ -450,13 +415,14 @@
                 "# crashes involving unsafe speeding: <b>" + props["SPEEDING"] + "</b><br>" +
                 "# crashes involving motocycles: <b>" + props["MOTORCYCLE"] + "</b><br>" +
                 "# crashes involving trucks: <b>" + props["TRUCK"] + "</b>"
-                //select the div using its class 'info' and insert the string content
-<<<<<<< Updated upstream
+                
             $(".stats").html(html);
 
 
            var crashvalue = [props['2011TOTAL'], props['2012TOTAL'], props['2013TOTAL'], props['2014TOTAL'], props['2015TOTAL']];
-           console.log(crashvalue)
+            
+           console.log(crashvalue);
+           
             $('.crashspark').sparkline(crashvalue, {
                width: '180px',
                lineColor: '#D96D02',
@@ -467,27 +433,12 @@
                spotRadius: 0,
                lineWidth: 2
            });
-=======
-            $(".info").html(html);
-            //            
-            //            var crashvalue = [];
-            //                        
-            //                        $('.crashspark').sparkline(crashvalue, {
-            //                width: '180px',
-            //                lineColor: '#D96D02',
-            //                fillColor: '#d98939 ',
-            //                spotColor: '#1C9976',
-            //                minSpotColor: '#1C9976',
-            //                maxSpotColor: '#1C9976',
-            //                spotRadius: 0,
-            //                lineWidth: 2
-            //            });
->>>>>>> Stashed changes
 
+            $(".info").html(html);
         }
 
     </script>
-
+        
 </body>
 
 </html>
