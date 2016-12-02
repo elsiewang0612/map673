@@ -27,6 +27,7 @@
             font-size: 1em;
             margin-left: 31%;
         }
+        
         footer {
             padding: 6px 10%;
             width: 80%;
@@ -65,26 +66,33 @@
             border-left: 10px solid #1C9976;
             overflow-y: scroll;
         }
-          #side-panel p {
+        
+        #side-panel p {
             margin: 8px 0 4px;
             padding: 0 25px 0 15px;
             color: #3d3d3d;
             text-align: left;
             font-size: 0.8em;
         }
+        
         #side-panel p: after {
             content: '';
             display: block;
             clear: both;
         }
+        
         #side-panel img {
             height: 200px;
             max-width: 670px;
             float: left;
             margin: 0 0 0px 0px;
         }
+<<<<<<< Updated upstream
 
 
+=======
+        
+>>>>>>> Stashed changes
         p {
             font-size: 1em;
             color: #001323;
@@ -125,11 +133,13 @@
             float: left;
             margin-right: 15px;
         }
+        
         .legend label {
             font-size: 1em;
             font-weight: bold;
             line-height: 1.8
         }
+        
         .legend label:after {
             content: '';
             display: block;
@@ -168,14 +178,14 @@
 <body>
 
     <div id='side-panel'>
-             <h2>Car Crashes</h2>
-             <p>Car crashes are the number one killer in the United States. Driving safety is eternal theme of modern human society. The transportation center of each state would collect crash data and aims to improve the methods of identifying crash locations. However, the most analysis and investigation are only on papers, it is not commom that collect and analyze data from a geographic perspective. The observation through the more interactive map representation would be more productive, realistic, and comprehensive. </p>
-             <p><img src="crash.png" alt="legend"></p>
-             <h2>About this map</h2>
-             <p>This map presents the statewide crashes distributions by counties for the years of 2011 through 2015. A primary objective of this map is to figure out the association between the crashes frequencies and the geographic locations. Crash rate(percentage) is calulated as total number of crashes is divided by the population for each county and various types of crashes causes.According to the ducmentations, the most crashes involves alcohol, drugs, unsafe speeding, motocycle and trucks. So the map present the crash distribution in terms of these five types of factors. The map provides the managers with a good reference to identify the major crash causes and take corresponding measures; for the drivers, they could pay more attention according to the crash rate and causes when they drive in a specific county.</p>
-             <h2>About the data</h2>
-             <p>The crash data is collected from "Analysis of Traffic Crash Data in Kentucky (2011–2015)" authored by the Kentucky Transportation Center (KTC). The crash data are stored in the Collision Report Analysis for Safer Highways (CRASH) database. This database is updated daily so the number of crashes in a given calendar year will continue to change for a substantial time after the end of that year.The population data is from US census.</p>
-             <p>The map is authored by Xi Wang for MAP673, University of Kentucky</p>
+        <h2>Car Crashes</h2>
+        <p>Car crashes are the number one killer in the United States. Driving safety is eternal theme of modern human society. The transportation center of each state would collect crash data and aims to improve the methods of identifying crash locations. However, the most analysis and investigation are only on papers, it is not commom that collect and analyze data from a geographic perspective. The observation through the more interactive map representation would be more productive, realistic, and comprehensive. </p>
+        <p><img src="crash.png" alt="legend"></p>
+        <h2>About this map</h2>
+        <p>This map presents the statewide crashes distributions by counties for the years of 2011 through 2015. A primary objective of this map is to figure out the association between the crashes frequencies and the geographic locations. Crash rate(percentage) is calulated as total number of crashes is divided by the population for each county and various types of crashes causes.According to the ducmentations, the most crashes involves alcohol, drugs, unsafe speeding, motocycle and trucks. So the map present the crash distribution in terms of these five types of factors. The map provides the managers with a good reference to identify the major crash causes and take corresponding measures; for the drivers, they could pay more attention according to the crash rate and causes when they drive in a specific county.</p>
+        <h2>About the data</h2>
+        <p>The crash data is collected from "Analysis of Traffic Crash Data in Kentucky (2011–2015)" authored by the Kentucky Transportation Center (KTC). The crash data are stored in the Collision Report Analysis for Safer Highways (CRASH) database. This database is updated daily so the number of crashes in a given calendar year will continue to change for a substantial time after the end of that year.The population data is from US census.</p>
+        <p>The map is authored by Xi Wang for MAP673, University of Kentucky</p>
     </div>
 
     <header>
@@ -196,9 +206,15 @@
     </div>
     <div id='map'></div>
 
+<<<<<<< Updated upstream
 
     <div class="info">
         <div class="stats"></div>
+=======
+    <!--
+    <div id="info">
+        <p>trend grades 1 &ndash; 12</p>
+>>>>>>> Stashed changes
         <p><span class="crashspark"></span></p>
     </div>
 
@@ -212,8 +228,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.1/simple_statistics.js"></script>
     <script src="sparkline.js"></script>
     <script>
+<<<<<<< Updated upstream
         //set initial options for the map
 
+=======
+>>>>>>> Stashed changes
         var options = {
             center: [37.832425, -85.693959],
             zoom: 6.8,
@@ -238,6 +257,7 @@
         var map = L.map('map', options);
 
         var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+<<<<<<< Updated upstream
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
         subdomains: 'abcd',
         maxZoom: 19
@@ -245,6 +265,15 @@
 
     // adds these tiles to the map
     map.addLayer(tiles);
+=======
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        });
+
+        // adds these tiles to the map
+        map.addLayer(tiles);
+>>>>>>> Stashed changes
 
         var dataLayer, // declare global variable for map units
             attribute = "TOTAL", // assign initial variable to store data attribute
@@ -309,9 +338,9 @@
                     });
                 });
 
-                layer.bindPopup("<b>" + layer.feature.properties["NAME"] + " County</b></br>" + labels[attribute] + ": " + ((layer.feature.properties[attribute] / layer.feature.properties[norm]) * 100).toLocaleString()
-                );
+                layer.bindPopup("<b>" + layer.feature.properties["NAME"] + " County</b></br>" + labels[attribute] + ": " + ((layer.feature.properties[attribute] / layer.feature.properties[norm]) * 100).toLocaleString());
             });
+
             updateLegend(breaks);
         }
 
@@ -422,6 +451,7 @@
                 "# crashes involving motocycles: <b>" + props["MOTORCYCLE"] + "</b><br>" +
                 "# crashes involving trucks: <b>" + props["TRUCK"] + "</b>"
                 //select the div using its class 'info' and insert the string content
+<<<<<<< Updated upstream
             $(".stats").html(html);
 
 
@@ -437,6 +467,22 @@
                spotRadius: 0,
                lineWidth: 2
            });
+=======
+            $(".info").html(html);
+            //            
+            //            var crashvalue = [];
+            //                        
+            //                        $('.crashspark').sparkline(crashvalue, {
+            //                width: '180px',
+            //                lineColor: '#D96D02',
+            //                fillColor: '#d98939 ',
+            //                spotColor: '#1C9976',
+            //                minSpotColor: '#1C9976',
+            //                maxSpotColor: '#1C9976',
+            //                spotRadius: 0,
+            //                lineWidth: 2
+            //            });
+>>>>>>> Stashed changes
 
         }
 
