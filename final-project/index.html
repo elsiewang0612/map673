@@ -25,7 +25,7 @@
             width: 100%;
             margin: px auto 5px auto;
             font-size: 1em;
-            margin-left: 31%;
+            margin-left: 29%;
         }
         
         footer {
@@ -52,7 +52,7 @@
             top: 20%;
             bottom: 0;
             right: 0;
-            width: 69%;
+            width: 71%;
         }
 
         #side-panel {
@@ -60,7 +60,7 @@
             left: 0;
             top: 0;
             bottom: 0;
-            width: 30%;
+            width: 28%;
             background: whitesmoke;
             border-right: 2px solid #1C9976;
             border-left: 10px solid #1C9976;
@@ -83,7 +83,7 @@
         
         #side-panel img {
             height: 200px;
-            max-width: 670px;
+            max-width: 330px;
             float: left;
             margin: 0 0 0px 0px;
         }
@@ -143,7 +143,7 @@
         #ui-controls {
             margin-left: 31%;
             margin-top: 12px;
-            margin-left: 401px;
+            margin-left: 375px;
         }
 
         #ui-controls label {
@@ -152,21 +152,23 @@
         }
         .info {
           position: absolute;
-          top: 20px;
-          right: 15px;
+          top: 20%;
+          right: 10px;
           background: rgba(255, 255, 255, 0.8);
           box-shadow: 0 0 19px rgba(0, 0, 0, 0.2);
           border-radius: 5px;
           padding: 15px 8px;
           z-index: 800;
-          font-size: 0.9em;
+          font-size: 0.7em;
+            font-weight: bold;
         }
         .info h3 {
             margin: 0;
             padding: 6px 8px;
-            font-size: 1em;   
+            font-size: 1em; 
+            font-weight: bold;
         }
-
+        
     </style>
 </head>
 
@@ -202,6 +204,8 @@
     <div class="info">
     
     <div class="stats"></div>
+        <hr>
+        <p>Crashes Trend 2011 &ndash; 2015</p>
         <p><span class="crashspark"></span></p> 
     </div>
 
@@ -212,7 +216,7 @@
     <script>
 
         var options = {
-            center: [37.832425, -85.693959],
+            center: [37.844391, -84.903328],
             zoom: 6.8,
             minZoom: 5,
             maxZoom: 9,
@@ -295,7 +299,8 @@
                 layer.on('mouseout', function() { 
                     updateInfo(this);
                     dataLayer.on('mouseout', function() {
-                        $(".info").hide(); //when the mouse leave the feature, the info panel will disappear
+                        $(".info").hide();
+                        
                     });
                     layer.setStyle({
                         fillColor: getColor(props[attribute] /
@@ -396,7 +401,8 @@
              }
              info.addTo(map);
              
-             $(".info").hide();
+             
+             
          }
         
         function updateInfo(layer) {
